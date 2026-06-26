@@ -3,11 +3,11 @@ WORKDIR /src
 
 COPY . .
 
-WORKDIR /src/SkyJourneyBD.API
-RUN dotnet restore
-RUN dotnet publish -c Release -o /app/publish
+RUN dotnet restore SkyJourneyBD.API/SkyJourneyBD.API.csproj
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+RUN dotnet publish SkyJourneyBD.API/SkyJourneyBD.API.csproj -c Release -o /app/publish
+
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
 WORKDIR /app
 
 COPY --from=build /app/publish .
