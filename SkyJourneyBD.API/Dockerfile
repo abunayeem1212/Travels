@@ -3,8 +3,8 @@ WORKDIR /src
 
 COPY . .
 
-RUN dotnet restore SkyJourneyBD.API.csproj
-RUN dotnet publish SkyJourneyBD.API.csproj -c Release -o /app/publish
+RUN dotnet restore SkyJourneyBD.API/SkyJourneyBD.API.csproj
+RUN dotnet publish SkyJourneyBD.API/SkyJourneyBD.API.csproj -c Release -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
 WORKDIR /app
@@ -12,7 +12,6 @@ WORKDIR /app
 COPY --from=build /app/publish .
 
 ENV ASPNETCORE_URLS=http://+:10000
-
 EXPOSE 10000
 
 ENTRYPOINT ["dotnet", "SkyJourneyBD.API.dll"]
